@@ -1,4 +1,4 @@
-package Lezione1_Tipi_di_Dati;
+package Lezione001_Tipi_di_Dati;
 
 public class ApplicationMain {
 

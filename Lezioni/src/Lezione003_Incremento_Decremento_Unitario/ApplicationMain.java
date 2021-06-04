@@ -1,4 +1,4 @@
-package Lezione3_Incremento_Decremento_Unitario;
+package Lezione003_Incremento_Decremento_Unitario;
 
 public class ApplicationMain {
 

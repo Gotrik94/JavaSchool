@@ -1,4 +1,4 @@
-package Lezione2_Operazioni_Aritmetiche;
+package Lezione002_Operazioni_Aritmetiche;
 
 public class ApplicationMain {
 

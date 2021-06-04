@@ -1,4 +1,4 @@
-package Lezione5_Oggetti;
+package Lezione005_Oggetti;
 
 public class Persona {
 	

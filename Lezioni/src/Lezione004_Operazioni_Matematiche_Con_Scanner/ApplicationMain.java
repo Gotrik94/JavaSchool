@@ -1,4 +1,4 @@
-package Lezione4_Operazioni_Matematiche_Con_Scanner;
+package Lezione004_Operazioni_Matematiche_Con_Scanner;
 
 import java.util.Scanner;
 
