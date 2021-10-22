@@ -1,0 +1,119 @@
+Eseguire 
+mysql -u root -p
+successivamente digitare la password per poter accedere al pannello di mysql
+
+Comando per poter accedere alla lista dei database
+SHOW DATABASES;
+
+Creare un nuovo schema
+CREATE DATABASE nomedeldb;
+
+Per poter cominciare ad usare un db inserire
+USE nomedeldb;
+
+Ammettendo di dover lavorare su una libreria andiamo a creare le varie tabelle
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`libro` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `autore` VARCHAR(45) NOT NULL,
+  `data_uscita` DATETIME NULL,
+  `disponibilita` INT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`biblioteca` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `indirizzo` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`utente` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL,
+  `cognome` VARCHAR(45) NULL,
+  `eta` VARCHAR(45) NULL,
+  `indirizzo` VARCHAR(45) NULL,
+  `biblioteca_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_utente_biblioteca1_idx` (`biblioteca_id` ASC) VISIBLE,
+  CONSTRAINT `fk_utente_biblioteca1`
+    FOREIGN KEY (`biblioteca_id`)
+    REFERENCES `biblioteca`.`biblioteca` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `biblioteca`.`noleggio` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `libro_id` INT NOT NULL,
+  `utente_id` INT NOT NULL,
+  `consegnato` TINYINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_noleggio_libro_idx` (`libro_id` ASC) VISIBLE,
+  INDEX `fk_noleggio_utente1_idx` (`utente_id` ASC) VISIBLE,
+  CONSTRAINT `fk_noleggio_libro`
+    FOREIGN KEY (`libro_id`)
+    REFERENCES `biblioteca`.`libro` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_noleggio_utente1`
+    FOREIGN KEY (`utente_id`)
+    REFERENCES `biblioteca`.`utente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+Per visualizzare le tabelle
+SHOW TABLES;
+
+e i dettagli di queste : 
+DESCRIBE nometabella;
+
+
+inseriamo un pò di dati 
+
+INSERT INTO `biblioteca`.`biblioteca` (`indirizzo`) VALUES ('Viale dei Caduti per la Resistenza, 410/A, 00128 Roma RM');
+INSERT INTO `biblioteca`.`biblioteca` (`indirizzo`) VALUES ('P.le Francesco Accursio, 5, 20151 Milano MI');
+INSERT INTO `biblioteca`.`biblioteca` (`indirizzo`) VALUES ('476 5th Ave, New York, NY 10018, Stati Uniti');
+INSERT INTO `biblioteca`.`biblioteca` (`indirizzo`) VALUES ('93 Caswell Ave, Derby Line, VT 05830, Stati Uniti');
+INSERT INTO `biblioteca`.`biblioteca` (`indirizzo`) VALUES ('Imaneq 26, Nuuk 3900, Groenlandia');
+
+
+INSERT INTO `biblioteca`.`libro` (`nome`, `autore`, `data_uscita`, `disponibilita`) VALUES ('Il gioco del trono', 'George R. R. Martin', '1996-09-01', '24')
+INSERT INTO `biblioteca`.`libro` (`nome`, `autore`, `data_uscita`, `disponibilita`) VALUES ('Il Signore degli Anelli', 'J. R. R. Tolkien', '1954-07-29', '50')
+INSERT INTO `biblioteca`.`libro` (`nome`, `autore`, `data_uscita`, `disponibilita`) VALUES ('L\'erede dei Jedi (Heir to the Jedi)', 'Kevin Hearne', '2015-01-01', '20')
+INSERT INTO `biblioteca`.`libro` (`nome`, `autore`, `data_uscita`, `disponibilita`) VALUES ('Pet Sematary', 'Stephen King', '1983-11-14', '10')
+INSERT INTO `biblioteca`.`libro` (`nome`, `autore`, `data_uscita`, `disponibilita`) VALUES ('It', 'Stephen King', '1986-09-15', '21')
+INSERT INTO `biblioteca`.`libro` (`nome`, `autore`, `data_uscita`, `disponibilita`) VALUES ('Dracula', 'Bram Stoker', '1897-05-26', '5')
+INSERT INTO `biblioteca`.`libro` (`nome`, `autore`, `data_uscita`, `disponibilita`) VALUES ('Il ladro di merendine', 'Andrea Camilleri', '1996-01-20', '9')
+
+
+
+INSERT INTO `utente` VALUES 
+(1,'Dario','Piccolo','21','Via Roma',1),
+(2,'Marcello','Grande','5','Via Enopide di Chio',1),
+(3,'Tiziano','Esposito','10','Via G. di Vittorio',2),
+(4,'Lara','Innocenzi','25','P.za Roberto Malatesta',4);
+
+
+
+Ora andiamo a visualizzare il contenuto di una tabella
+SELECT * FROM libro;
+
+proviamo ad aggiungere qualche clausola alla ricerca ..
+SELECT * FROM libro WHERE autore = 'Stephen King';
+
+eliminiamo il libro Il ladro di merendine
+DELETE FROM libro WHERE nome='Il ladro di merendine';
+
+Aggiungiamo il tipo di copertina dentro la tabella libro
+ALTER TABLE libro ADD copertina CHAR(50) AFTER autore;
+
+Ma ripensandoci non ci serve così tanto .. eliminiamo il capo creato prima
+ALTER TABLE libro DROP copertina;
+
+
+
+Perfetto ora siamo in grado di eseguire crud nei nostri db ! Bravissimi !
