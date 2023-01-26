@@ -14,7 +14,7 @@ public class ApplicationMain {
 //	DIFFERENZA
 		
 		int differenza = x-y;		
-//  PRODOTTO
+//  	PRODOTTO
 		
 		int prodotto = x*y;
 //	QUOZIENTE
